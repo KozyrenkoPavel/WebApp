@@ -28,6 +28,10 @@ async function create(): Promise<Db> {
     "Орион",
   ];
 
+  await lite.exec(
+    fs.readFileSync(path.join(process.cwd(), "db", "schema.sql"), "utf8"),
+  );
+
   await lite.query(
     "INSERT INTO users (username, password_hash) VALUES ('admin', $1)",
     [await bcrypt.hash("admin123", 10)],
